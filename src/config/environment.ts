@@ -1,6 +1,16 @@
 import * as dotenv from 'dotenv';
+import * as path from 'path';
 
-dotenv.config();
+// Load environment-specific .env file
+const env = process.env.NODE_ENV || 'development';
+const envFile = `.env.${env}`;
+
+// Try to load environment-specific file first, then fallback to .env
+try {
+  dotenv.config({ path: path.resolve(process.cwd(), envFile) });
+} catch {
+  dotenv.config();
+}
 
 export const config = {
   cloudflare: {
@@ -10,6 +20,6 @@ export const config = {
     apiBase: 'https://api.cloudflare.com/client/v4',
   },
   ddns: {
-    updateIntervalMs: 60 * 60 * 1000, // 1 hour
+    updateIntervalMs: parseInt(process.env.DDNS_UPDATE_INTERVAL_MS || '3600000', 10),
   },
 } as const;
