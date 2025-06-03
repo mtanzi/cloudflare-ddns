@@ -43,7 +43,7 @@ async function updateRecord(zoneId: string, recordId: string, newIP: string) {
     },
     {
       headers: { Authorization: `Bearer ${CF_API_TOKEN}` },
-    }
+    },
   );
 }
 
@@ -68,7 +68,7 @@ async function ddnsLoop() {
       console.error('❌ Error in update loop:', err);
     }
 
-    await new Promise(resolve => setTimeout(resolve, 60 * 60 * 1000)); // 1 hour
+    await new Promise((resolve) => setTimeout(resolve, 60 * 60 * 1000)); // 1 hour
   }
 }
 
