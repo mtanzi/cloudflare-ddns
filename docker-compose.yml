@@ -1,0 +1,29 @@
+services:
+  cloudflare-ddns:
+    build: .
+    container_name: cloudflare-ddns
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - CF_API_TOKEN=${CF_API_TOKEN}
+      - CF_ZONE_NAME=${CF_ZONE_NAME}
+      - CF_RECORD_NAME=${CF_RECORD_NAME}
+      # Optional: Override update interval
+      # - DDNS_UPDATE_INTERVAL_MS=3600000
+    volumes:
+      # Optional: Mount logs directory
+      - ./logs:/app/logs
+    # Optional: Add network configuration
+    networks:
+      - ddns-network
+    # Optional: Add health check
+    healthcheck:
+      test: ['CMD', 'node', '-e', "console.log('Health check')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+networks:
+  ddns-network:
+    driver: bridge
