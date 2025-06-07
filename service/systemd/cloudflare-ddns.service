@@ -1,0 +1,15 @@
+[Unit]
+Description=Cloudflare DDNS Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /opt/cloudflare-ddns/dist/index.js
+Restart=always
+RestartSec=10
+EnvironmentFile=/etc/cloudflare-ddns.env
+WorkingDirectory=/opt/cloudflare-ddns
+User=pi
+
+[Install]
+WantedBy=multi-user.target

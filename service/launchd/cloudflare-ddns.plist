@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>cloudflare-ddns</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/node</string>
+        <string>/Users/$(whoami)/cloudflare-ddns/dist/index.js</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/$(whoami)/cloudflare-ddns</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>CLOUDFLARE_API_TOKEN</key>
+        <string>$(cat ~/Library/Application\ Support/cloudflare-ddns/env | grep CLOUDFLARE_API_TOKEN | cut -d '=' -f2)</string>
+        <key>CLOUDFLARE_ZONE_ID</key>
+        <string>$(cat ~/Library/Application\ Support/cloudflare-ddns/env | grep CLOUDFLARE_ZONE_ID | cut -d '=' -f2)</string>
+        <key>DNS_RECORD_NAME</key>
+        <string>$(cat ~/Library/Application\ Support/cloudflare-ddns/env | grep DNS_RECORD_NAME | cut -d '=' -f2)</string>
+        <key>DNS_RECORD_TYPE</key>
+        <string>$(cat ~/Library/Application\ Support/cloudflare-ddns/env | grep DNS_RECORD_TYPE | cut -d '=' -f2)</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/Users/$(whoami)/Library/Logs/cloudflare-ddns.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/$(whoami)/Library/Logs/cloudflare-ddns.err.log</string>
+</dict>
+</plist>
